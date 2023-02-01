@@ -31,7 +31,7 @@ class MyCards(ListCreateAPIView):
     serializer_class = SocialCardSerializer
 
     def get_queryset(self):
-        return SocialCard.objects.all().filter(owner=self.request.user)
+        return SocialCard.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
