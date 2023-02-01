@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, SocialCard
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,7 +12,8 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
         )
 
-class SocialCardSerializer(serializers.ModelSerializer)
+
+class SocialCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialCard
         fields = (
