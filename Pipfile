@@ -11,6 +11,7 @@ whitenoise = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 gunicorn = "*"
+djoser = "*"
 
 [dev-packages]
 flake8 = "*"
