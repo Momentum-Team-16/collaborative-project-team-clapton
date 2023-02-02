@@ -8,12 +8,6 @@ https://social-cards-wg2j.onrender.com
 
 **All requests, except registration and log in, require authentication**.
 
-## Required Headers
-
-Requests to endpoints requiring authentication should set the `Authorization` header to `Token <token>`, where `<token>` is the token received in the login response.
-
-POST requests with a body should set the `Content-Type` header to `application/json`.
-
 Documentation starts here:
 
 ### API ENDPOINTS
