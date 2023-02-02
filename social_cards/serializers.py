@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, SocialCard
+from .models import User, SocialCard, Follower
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 
@@ -33,3 +33,8 @@ class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
             'border_color',
             'tags'
         )
+
+class FollowerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Follower
+        fields = ('id', 'user', 'followed', 'created')

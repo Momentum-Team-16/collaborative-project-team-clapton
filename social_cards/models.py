@@ -27,4 +27,16 @@ class SocialCard(models.Model):
 
 
 class Follower(models.Model):
-    pass
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='LoggedInUser', null=True)
+    followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name='OtherUser', null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True, db_index=True)
+
+    class Meta:
+            constraints = [
+                models.UniqueConstraint(
+                    fields=['user', 'followed'], name='unique_follower'
+                )
+            ]
+
+    def __str__(self):
+        return f'{self.user} is now following {self.followed}'
