@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from .models import SocialCard, User
 from .serializers import UserSerializer, SocialCardSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -35,3 +35,21 @@ class MyCards(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class CardDetail(RetrieveAPIView):
+    serializer_class = SocialCardSerializer
+    lookup_url_kwarg = 'card_id'
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return SocialCard.objects.all()
+
+
+class CardEdit(RetrieveUpdateDestroyAPIView):
+    serializer_class = SocialCardSerializer
+    lookup_url_kwarg = 'card_id'
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return SocialCard.objects.filter(owner=self.request.user)
