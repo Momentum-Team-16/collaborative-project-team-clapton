@@ -7,4 +7,5 @@ urlpatterns = [
     path('cards/me/', views.MyCards.as_view(), name='my-cards'),
     path('cards/<int:card_id>/', views.CardDetail.as_view(), name='card-detail'),
     path('cards/<int:card_id>/edit', views.CardEdit.as_view(), name='card-edit'),
+    path('search', views.CardSearch.as_view(), name='tags_search'),
 ]

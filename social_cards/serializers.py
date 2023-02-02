@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
-class SocialCardSerializer(serializers.ModelSerializer, TaggitSerializer):
+class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
     owner = serializers.SlugRelatedField(slug_field='username', read_only=True)
     tags = TagListSerializerField()
 

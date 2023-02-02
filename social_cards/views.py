@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from .models import SocialCard, User
 from .serializers import UserSerializer, SocialCardSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -53,3 +53,12 @@ class CardEdit(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return SocialCard.objects.filter(owner=self.request.user)
+
+class CardSearch(ListAPIView):
+    queryset = SocialCard.objects.all()
+    serializer_class = SocialCardSerializer
+
+    def get_queryset(self):
+        search_term = self.request.query_params.get("tags")
+        if search_term is not None:
+            return self.queryset.filter(tags__name__in=[search_term])
