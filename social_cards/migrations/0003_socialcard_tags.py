@@ -7,7 +7,6 @@ import taggit.managers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taggit', '0005_auto_20220424_2025'),
         ('social_cards', '0002_follower_socialcard_back_image_and_more'),
     ]
 
