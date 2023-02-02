@@ -21,7 +21,7 @@ class UserDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
-class CardsList(ListCreateAPIView):
+class CardsList(ListAPIView):
     queryset = SocialCard.objects.all()
     serializer_class = SocialCardSerializer
     permission_classes = [IsAuthenticated]

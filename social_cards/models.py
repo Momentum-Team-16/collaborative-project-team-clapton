@@ -20,7 +20,7 @@ class SocialCard(models.Model):
     font = models.CharField(max_length=50, null=True, blank=True)
     text_color = models.CharField(max_length=50, null=True, blank=True)
     border_color = models.CharField(max_length=50, null=True, blank=True)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return f'{self.title}'
