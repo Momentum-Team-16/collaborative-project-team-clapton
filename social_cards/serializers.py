@@ -14,6 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class SocialCardSerializer(serializers.ModelSerializer):
+    owner = serializers.SlugRelatedField(slug_field='username', read_only=True)
+
     class Meta:
         model = SocialCard
         fields = (
