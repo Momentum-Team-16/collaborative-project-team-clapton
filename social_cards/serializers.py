@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, SocialCard
+from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,8 +14,9 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
-class SocialCardSerializer(serializers.ModelSerializer):
+class SocialCardSerializer(serializers.ModelSerializer, TaggitSerializer):
     owner = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    tags = TagListSerializerField()
 
     class Meta:
         model = SocialCard
@@ -29,4 +31,5 @@ class SocialCardSerializer(serializers.ModelSerializer):
             'font',
             'text_color',
             'border_color',
+            'tags'
         )
