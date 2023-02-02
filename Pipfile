@@ -12,6 +12,7 @@ psycopg2-binary = "*"
 djangorestframework = "*"
 gunicorn = "*"
 djoser = "*"
+django-taggit = "*"
 
 [dev-packages]
 flake8 = "*"

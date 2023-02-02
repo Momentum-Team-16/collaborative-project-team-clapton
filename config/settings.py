@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'social_cards',
     'djoser',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,5 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_ALL_ORIGINS=True
+
+TAGGIT_CASE_INSENSITIVE = True
