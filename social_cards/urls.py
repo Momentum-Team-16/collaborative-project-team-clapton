@@ -6,6 +6,6 @@ urlpatterns = [
     path('cards/', views.CardsList.as_view(), name='cards'),
     path('cards/me/', views.MyCards.as_view(), name='my_cards'),
     path('cards/<int:card_id>/', views.CardDetail.as_view(), name='card_detail'),
-    path('cards/<int:card_id>/edit', views.CardEdit.as_view(), name='card_edit'),
+    path('cards/<int:card_id>/edit/', views.CardEdit.as_view(), name='card_edit'),
     path('search', views.CardSearch.as_view(), name='tags_search'),
 ]
