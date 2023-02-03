@@ -4,6 +4,7 @@ from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = (
@@ -16,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
     owner = serializers.SlugRelatedField(slug_field='username', read_only=True)
-    tags = TagListSerializerField()
+    tags = TagListSerializerField(read_only=True)
 
     class Meta:
         model = SocialCard
@@ -34,7 +35,9 @@ class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
             'tags'
         )
 
+
 class FollowerSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Follower
         fields = ('id', 'user', 'followed', 'created')
