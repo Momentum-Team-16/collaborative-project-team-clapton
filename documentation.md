@@ -20,9 +20,9 @@ Documentation starts here:
 | GET        | /cards/            | Gets list of all cards created         |
 | GET        | /cards/me/         | List all of the logged in user's cards |
 | POST       | /cards/me/         | Create a card for the logged in user   |
-| GET        | /cards/<card_id>   | Get a specific card's details          |
-| PATCH      | /cards/<card_id>   | Updates a specific card's details.     |
-| DELETE     | /cards/<card_id>   | Delete's a specific card.              |
+| GET        | /cards/<card_id>/  | Get a specific card's details          |
+| PATCH      | /cards/<card_id>/  | Updates a specific card's details.     |
+| DELETE     | /cards/<card_id>/  | Delete's a specific card.              |
 | GET        | /search            | Search for a card's tag(s).            |
 
 ## Register a new user
