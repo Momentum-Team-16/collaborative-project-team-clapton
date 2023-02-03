@@ -37,22 +37,16 @@ class MyCards(ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class CardDetail(RetrieveAPIView):
+class CardDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = SocialCardSerializer
     lookup_url_kwarg = 'card_id'
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return SocialCard.objects.all()
-
-
-class CardEdit(RetrieveUpdateDestroyAPIView):
-    serializer_class = SocialCardSerializer
-    lookup_url_kwarg = 'card_id'
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
+        if self.request.method == 'GET':
+            return SocialCard.objects.all()
         return SocialCard.objects.filter(owner=self.request.user)
+
 
 class CardSearch(ListAPIView):
     queryset = SocialCard.objects.all()
@@ -62,6 +56,7 @@ class CardSearch(ListAPIView):
         search_term = self.request.query_params.get("tags")
         if search_term is not None:
             return self.queryset.filter(tags__name__in=[search_term])
+
 
 class FollowerDetail(ListCreateAPIView):
     queryset = Follower.objects.all()
@@ -74,6 +69,7 @@ class FollowerDetail(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 
 class FollowerEdit(RetrieveDestroyAPIView):
     queryset = Follower.objects.all()
