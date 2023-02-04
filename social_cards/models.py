@@ -9,6 +9,10 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    @property
+    def followed_list(self):
+        return [follower.followed for follower in self.LoggedInUser.all()]
+
 
 class SocialCard(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='SocialCards', null=True)
@@ -32,11 +36,11 @@ class Follower(models.Model):
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True, db_index=True)
 
     class Meta:
-            constraints = [
-                models.UniqueConstraint(
-                    fields=['user', 'followed'], name='unique_follower'
-                )
-            ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'followed'], name='unique_follower'
+            )
+        ]
 
     def __str__(self):
         return f'{self.user} is now following {self.followed}'

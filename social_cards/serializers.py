@@ -4,6 +4,7 @@ from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
+    followed_list = serializers.CharField()
 
     class Meta:
         model = User
@@ -12,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
+            'followed_list',
         )
 
 
@@ -32,7 +34,7 @@ class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
             'font',
             'text_color',
             'border_color',
-            'tags'
+            'tags',
         )
 
 
