@@ -75,3 +75,21 @@ class FollowerEdit(RetrieveDestroyAPIView):
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
     permission_classes = [IsAuthenticated]
+
+
+class OtherUserCards(ListAPIView):
+    serializer_class = SocialCardSerializer
+    lookup_url_kwarg = 'user_id'
+
+    def get_queryset(self):
+        user_id = get_object_or_404(User, id=self.kwargs['user_id'])
+        return SocialCard.objects.filter(owner=user_id)
+
+
+class FollowedCards(ListAPIView):
+    serializer_class = SocialCardSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        followed_list = self.request.user.followed_list
+        return SocialCard.objects.filter(owner__in=followed_list)

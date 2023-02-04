@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'social_cards',
     'djoser',
     'taggit',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -166,6 +167,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_ALL_ORIGINS = True
 
 TAGGIT_CASE_INSENSITIVE = True
