@@ -44,3 +44,11 @@ class Follower(models.Model):
 
     def __str__(self):
         return f'{self.user} is now following {self.followed}'
+
+class Comments(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User')
+    social_card = models.ForeignKey(SocialCard, on_delete=models.CASCADE, related_name='SocialCard')
+    comment = models.TextField(max_length=250)
+
+    def __str__(self):
+        return f'{self.comment}'
