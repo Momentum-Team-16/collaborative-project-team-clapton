@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .models import SocialCard, User, Follower
-from .serializers import UserSerializer, SocialCardSerializer, FollowerSerializer
+from .models import SocialCard, User, Follower, Comments
+from .serializers import UserSerializer, SocialCardSerializer, FollowerSerializer, CommentsSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -93,3 +93,14 @@ class FollowedCards(ListAPIView):
     def get_queryset(self):
         followed_list = self.request.user.followed_list
         return SocialCard.objects.filter(owner__in=followed_list)
+
+class CommentsList(ListCreateAPIView):
+    queryset = Comments.objects.all()
+    serializer_class = CommentsSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class CommentsDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Comments.objects.all()
+    serializer_class = CommentsSerializer
