@@ -16,7 +16,7 @@ Documentation starts here:
 | ---------- | ------------------ | -------------------------------------- |
 | GET        | /auth/token/login  | To login to an existing account        |
 | GET        | /auth/token/logout | Logout from account                    |
-| POST       | /auth/users        | Register new user                      |
+| POST       | /auth/users/       | Register new user                      |
 | GET        | /cards/            | Gets list of all cards created         |
 | GET        | /cards/me/         | List all of the logged in user's cards |
 | POST       | /cards/me/         | Create a card for the logged in user   |
