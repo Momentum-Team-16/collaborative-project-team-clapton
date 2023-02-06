@@ -33,7 +33,9 @@ class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
             'back_image',
             'font',
             'text_color',
+            'text_align',
             'border_color',
+            'border_style',
             'tags',
         )
 
