@@ -23,7 +23,9 @@ class SocialCard(models.Model):
     back_image = models.URLField(blank=True, null=True)
     font = models.CharField(max_length=50, null=True, blank=True)
     text_color = models.CharField(max_length=50, null=True, blank=True)
+    text_align = models.CharField(max_length=50, null=True, blank=True)
     border_color = models.CharField(max_length=50, null=True, blank=True)
+    border_style = models.CharField(max_length=50, null=True, blank=True)
     tags = TaggableManager(blank=True)
 
     def __str__(self):
