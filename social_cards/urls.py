@@ -13,4 +13,5 @@ urlpatterns = [
     path('users/<int:user_id>', views.OtherUserCards.as_view(), name='other_user_cards'),
     path('comment/', views.CommentsList.as_view(), name='comments_list'),
     path('comment/<int:pk>/', views.CommentsDetail.as_view(), name='comments_detail'),
+    path('like/<int:card_id>/', views.CardLike.as_view(), name='like'),
 ]

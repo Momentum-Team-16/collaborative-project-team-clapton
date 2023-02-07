@@ -27,6 +27,7 @@ class SocialCard(models.Model):
     border_color = models.CharField(max_length=50, null=True, blank=True)
     border_style = models.CharField(max_length=50, null=True, blank=True)
     tags = TaggableManager(blank=True)
+    likes = models.ManyToManyField(User, blank=True, related_name='card_likes')
 
     def __str__(self):
         return f'{self.title}'
