@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404
 from .models import SocialCard, User, Follower, Comments
 from .serializers import UserSerializer, SocialCardSerializer, FollowerSerializer, CommentsSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # Create your views here.
 
@@ -19,6 +21,27 @@ class UserView(ListCreateAPIView):
 class UserDetail(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class CardLike(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, card_id, format=None):
+        card = get_object_or_404(SocialCard, id=card_id)
+        user = self.request.user
+        liked = False
+        if card.likes.filter(username=user.username).exists():
+            liked = False
+            card.likes.remove(user)
+        else:
+            liked = True
+            card.likes.add(user)
+
+        data = {
+            "liked": liked
+        }
+
+        return Response(data)
 
 
 class CardsList(ListAPIView):
@@ -93,12 +116,14 @@ class FollowedCards(ListAPIView):
         followed_list = self.request.user.followed_list
         return SocialCard.objects.filter(owner__in=followed_list)
 
+
 class CommentsList(ListCreateAPIView):
     queryset = Comments.objects.all()
     serializer_class = CommentsSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 
 class CommentsDetail(RetrieveUpdateDestroyAPIView):
     queryset = Comments.objects.all()
