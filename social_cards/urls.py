@@ -10,8 +10,9 @@ urlpatterns = [
     path('follower/', views.FollowerDetail.as_view(), name='follower_list'),
     path('follower/<int:pk>/', views.FollowerEdit.as_view(), name='follower_edit'),
     path('search', views.CardSearch.as_view(), name='tags_search'),
-    path('users/<int:user_id>', views.OtherUserCards.as_view(), name='other_user_cards'),
+    path('users/<int:user_id>/', views.OtherUserCards.as_view(), name='other_user_cards'),
     path('comment/', views.CommentsList.as_view(), name='comments_list'),
     path('comment/<int:pk>/', views.CommentsDetail.as_view(), name='comments_detail'),
     path('like/<int:card_id>/', views.CardLike.as_view(), name='like'),
+    path('users/me/avatar/', views.UserAvatarCreateView.as_view(), name='user_avatar'),
 ]

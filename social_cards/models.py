@@ -6,6 +6,8 @@ from taggit.managers import TaggableManager
 
 
 class User(AbstractUser):
+    avatar = models.ImageField(upload_to="user_avatars", blank=True, null=True)
+
     def __str__(self):
         return self.username
 
