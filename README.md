@@ -12,18 +12,28 @@ Documentation starts here:
 
 ### API ENDPOINTS
 
-| HTTP Verbs | Endpoints          | Action                                 |
-| ---------- | ------------------ | -------------------------------------- |
-| GET        | /auth/token/login  | To login to an existing account        |
-| GET        | /auth/token/logout | Logout from account                    |
-| POST       | /auth/users/       | Register new user                      |
-| GET        | /cards/            | Gets list of all cards created         |
-| GET        | /cards/me/         | List all of the logged in user's cards |
-| POST       | /cards/me/         | Create a card for the logged in user   |
-| GET        | /cards/<card_id>/  | Get a specific card's details          |
-| PATCH      | /cards/<card_id>/  | Updates a specific card's details.     |
-| DELETE     | /cards/<card_id>/  | Delete's a specific card.              |
-| GET        | /search            | Search for a card's tag(s).            |
+| HTTP Verbs | Endpoints           | Action                                 |
+| ---------- | ------------------- | -------------------------------------- |
+| GET        | /auth/token/login   | To login to an existing account        |
+| GET        | /auth/token/logout  | Logout from account                    |
+| POST       | /auth/users/        | Register new user                      |
+| GET        | /cards/             | Gets list of all cards created         |
+| GET        | /cards/me/          | List all of the logged in user's cards |
+| POST       | /cards/me/          | Create a card for the logged in user   |
+| GET        | /cards/<card_id>/   | Get a specific card's details          |
+| PATCH      | /cards/<card_id>/   | Updates a specific card's details.     |
+| DELETE     | /cards/<card_id>/   | Delete's a specific card.              |
+| GET        | /cards/<username>/  | View a specific user's cards.          |
+| GET        | /cards/followed/    | Gets a list of followed user's cards.  |
+| POST       | /follower/<username>| Follow the given user.                 |
+| DELETE     | /unfollow/<username>| Unfollow the given user.               |
+| GET        | /like/<int:card_id> | Will like/unlike given card.           |
+| GET        | /search             | Search for a card's tag(s).            |
+| GET        | /comment/           | Get a list of all comments             |
+| POST       | /comment/           | Create a new comment                   |
+| GET        | /comments/<int:pk>/ | View a Specific comment                |
+| PUT        | /comments/<int:pk>/ | Updates the comment with specified id  |
+| DELETE     | /comments/<int:pk>/ | Deletes comment with specific id       |
 
 ## Register a new user
 
@@ -188,3 +198,93 @@ GET /cards/<int:card_id>/
   "tags": []
 }
 ```
+
+## List all comments
+
+### request
+
+Authorization is required.
+
+```
+GET <BASE_URL>/comment/
+
+```
+
+### response
+
+```json
+200 OK
+
+[
+	{
+		"id": 1,
+		"social_card": 3,
+		"comment": "TESTING!",
+		"user": "coding11"
+	},
+	{
+		"id": 2,
+		"social_card": 4,
+		"comment": "I really like coding!",
+		"user": "coding11"
+	}
+]
+
+```
+
+## Comment detail
+
+### request
+
+Authorization is required.
+
+```
+GET <BASE_URL>/comment/1/
+
+```
+
+### response
+
+```json
+200 OK
+
+{
+	"id": 1,
+	"social_card": 3,
+	"comment": "TESTING!",
+	"user": "coding11"
+}
+
+```
+
+
+## Follow a user
+
+### request
+
+Authorization is required.
+
+```
+GET /follower/<username>/
+
+```
+
+### response
+
+
+
+
+## Unfollow a user
+
+### request
+
+Authorization is required.
+
+```
+GET /unfollow/<username>/
+
+```
+
+### response
+
+```json
