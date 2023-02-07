@@ -60,3 +60,14 @@ class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
         fields = ('id', 'social_card', 'comment', 'user')
+
+class UserAvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('avatar',)
+
+    def update(self, instance, validated_data):
+        file = self.initial_data.get("file")
+        if file is not None:
+            instance.avatar.save(file.name, file)
+        return instance

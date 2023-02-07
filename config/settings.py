@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import environ
+from corsheaders.defaults import default_headers
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -149,6 +150,9 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+#Media files
+MEDIA_ROOT = BASE_DIR / "media"
+
 if not DEBUG: 
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -170,3 +174,7 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 TAGGIT_CASE_INSENSITIVE = True
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'content-disposition',
+]

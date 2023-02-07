@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
 from .models import SocialCard, User, Follower, Comments
-from .serializers import UserSerializer, SocialCardSerializer, FollowerSerializer, CommentsSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveDestroyAPIView
+from .serializers import UserSerializer, SocialCardSerializer, FollowerSerializer, CommentsSerializer, UserAvatarSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import parsers
 
 # Create your views here.
 
@@ -128,3 +129,11 @@ class CommentsList(ListCreateAPIView):
 class CommentsDetail(RetrieveUpdateDestroyAPIView):
     queryset = Comments.objects.all()
     serializer_class = CommentsSerializer
+
+class UserAvatarCreateView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserAvatarSerializer
+    parser_classes = [parsers.FileUploadParser]
+
+    def get_object(self):
+        return self.request.user
