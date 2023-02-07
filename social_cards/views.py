@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from .models import SocialCard, User, Follower, Comments
 from .serializers import UserSerializer, SocialCardSerializer, FollowerSerializer, CommentsSerializer, UserAvatarSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveDestroyAPIView, UpdateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -84,6 +84,7 @@ class CardSearch(ListAPIView):
 class FollowerDetail(ListCreateAPIView):
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
+    lookup_url_kwarg = 'username'
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -91,13 +92,22 @@ class FollowerDetail(ListCreateAPIView):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user_to_follow = get_object_or_404(User, username=self.kwargs['username'])
+        serializer.save(user=self.request.user, followed=user_to_follow)
 
 
-class FollowerEdit(RetrieveDestroyAPIView):
-    queryset = Follower.objects.all()
+class Unfollow(DestroyAPIView):
     serializer_class = FollowerSerializer
+    lookup_field = 'followed'
+    lookup_url_kwarg = 'username'
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Follower.objects.filter(user=self.request.user)
+        return queryset
+
+    def get_object(self):
+        return self.request.user.LoggedInUser.filter(followed__username=self.kwargs[self.lookup_url_kwarg]).first()
 
 
 class OtherUserCards(ListAPIView):
