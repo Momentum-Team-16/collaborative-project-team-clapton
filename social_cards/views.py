@@ -102,10 +102,10 @@ class FollowerEdit(RetrieveDestroyAPIView):
 
 class OtherUserCards(ListAPIView):
     serializer_class = SocialCardSerializer
-    lookup_url_kwarg = 'user_id'
+    lookup_url_kwarg = 'username'
 
     def get_queryset(self):
-        user_id = get_object_or_404(User, id=self.kwargs['user_id'])
+        user_id = get_object_or_404(User, username=self.kwargs['username'])
         return SocialCard.objects.filter(owner=user_id)
 
 
