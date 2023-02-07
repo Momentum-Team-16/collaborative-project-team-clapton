@@ -48,6 +48,8 @@ class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 
 class FollowerSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    followed = serializers.SlugRelatedField(slug_field='username', read_only=True)
 
     class Meta:
         model = Follower
