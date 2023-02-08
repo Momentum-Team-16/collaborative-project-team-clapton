@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class SocialCardSerializer(TaggitSerializer, serializers.ModelSerializer):
     owner = serializers.SlugRelatedField(slug_field='username', read_only=True)
-    tags = TagListSerializerField(read_only=True)
+    tags = TagListSerializerField()
     likes_total = serializers.SerializerMethodField('get_total_likes')
     likes = serializers.SlugRelatedField(slug_field='username', many=True, read_only=True)
 
@@ -62,6 +62,7 @@ class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
         fields = ('id', 'social_card', 'comment', 'user')
+
 
 class UserAvatarSerializer(serializers.ModelSerializer):
     class Meta:
