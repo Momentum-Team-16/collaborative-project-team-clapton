@@ -5,7 +5,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import parsers
+from rest_framework import filters, parsers, status
 
 # Create your views here.
 
@@ -56,10 +56,18 @@ class MyCards(ListCreateAPIView):
     def get_queryset(self):
         return SocialCard.objects.filter(owner=self.request.user)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request):
         if 'tags' not in request.data:
             request.data['tags'] = []
-        return super().create(request, *args, **kwargs)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(owner=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(owner=self.request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CardDetail(RetrieveUpdateDestroyAPIView):
@@ -76,11 +84,8 @@ class CardDetail(RetrieveUpdateDestroyAPIView):
 class CardSearch(ListAPIView):
     queryset = SocialCard.objects.all()
     serializer_class = SocialCardSerializer
-
-    def get_queryset(self):
-        search_term = self.request.query_params.get("tags")
-        if search_term is not None:
-            return self.queryset.filter(tags__name__in=[search_term])
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'tags__name']
 
 
 class FollowerDetail(ListCreateAPIView):
