@@ -56,8 +56,10 @@ class MyCards(ListCreateAPIView):
     def get_queryset(self):
         return SocialCard.objects.filter(owner=self.request.user)
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    def create(self, request, *args, **kwargs):
+        if 'tags' not in request.data:
+            request.data['tags'] = []
+        return super().create(request, *args, **kwargs)
 
 
 class CardDetail(RetrieveUpdateDestroyAPIView):
@@ -139,6 +141,7 @@ class CommentsList(ListCreateAPIView):
 class CommentsDetail(RetrieveUpdateDestroyAPIView):
     queryset = Comments.objects.all()
     serializer_class = CommentsSerializer
+
 
 class UserAvatarCreateView(UpdateAPIView):
     queryset = User.objects.all()
