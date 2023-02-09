@@ -17,6 +17,7 @@ Documentation starts here:
 | GET        | /auth/token/login               | To login to an existing account        |
 | GET        | /auth/token/logout              | Logout from account                    |
 | POST       | /auth/users/                    | Register new user                      |
+| GET        | /auth/users/me/                 | User profile                           |
 | GET        | /cards/                         | Gets list of all cards created         |
 | GET        | /cards/me/                      | List all of the logged in user's cards |
 | POST       | /cards/me/                      | Create a card for the logged in user   |
@@ -42,7 +43,7 @@ Documentation starts here:
 Username and password are required.
 
 ```txt
-POST auth/users/
+POST /auth/users/
 ```
 
 ```json
@@ -70,7 +71,7 @@ POST auth/users/
 ### request
 
 ```txt
-POST auth/token/login
+POST /auth/token/login/
 ```
 
 ```json
@@ -95,13 +96,45 @@ POST auth/token/login
 ### request
 
 ```txt
-POST auth/token/logout
+POST /auth/token/logout/
 ```
 
 ```json
 204 No Content
 
 No body returned for response
+```
+
+## User profile page for logged in user
+
+### request
+
+```txt
+GET auth/users/me/
+```
+
+### response
+
+```json
+200 OK
+
+{
+	"id": 3,
+	"username": "capel",
+	"first_name": "",
+	"last_name": "",
+	"followed_list": [
+		{
+			"followed": "daniel"
+		},
+		{
+			"followed": "jacob"
+		},
+		{
+			"followed": "lucian"
+		}
+	]
+}
 ```
 
 ## List all cards for all users
@@ -111,6 +144,8 @@ No body returned for response
 ```txt
 GET /cards/
 ```
+
+### response
 
 ```json
 200 OK

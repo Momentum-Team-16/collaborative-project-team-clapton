@@ -72,6 +72,7 @@ class CardDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        breakpoint()
         if self.request.method == 'GET':
             return SocialCard.objects.all()
         return SocialCard.objects.filter(owner=self.request.user)
