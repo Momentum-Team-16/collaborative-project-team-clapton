@@ -59,7 +59,6 @@ class MyCards(ListCreateAPIView):
     def create(self, request):
         if 'tags' not in request.data:
             request.data['tags'] = []
-            super().create(request)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
