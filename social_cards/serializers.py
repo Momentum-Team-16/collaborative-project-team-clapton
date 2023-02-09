@@ -3,8 +3,16 @@ from .models import User, SocialCard, Follower, Comments
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 
+class FollowedListSerializer(serializers.ModelSerializer):
+    followed = serializers.SlugRelatedField(slug_field='username', read_only=True)
+
+    class Meta:
+        model = Follower
+        fields = ('followed',)
+
+
 class UserSerializer(serializers.ModelSerializer):
-    followed_list = serializers.CharField()
+    followed_list = FollowedListSerializer(many=True, source='LoggedInUser')
 
     class Meta:
         model = User

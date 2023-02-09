@@ -180,3 +180,9 @@ TAGGIT_CASE_INSENSITIVE = True
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'content-disposition',
 ]
+
+DJOSER = {
+    'SERIALIZERS': {
+        'current_user': 'social_cards.serializers.UserSerializer',
+    },
+}
